@@ -1,4 +1,5 @@
 .DS_Store
+content-mine
 .gitignore
 node_modules
 public
