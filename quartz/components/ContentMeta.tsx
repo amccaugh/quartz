@@ -29,6 +29,12 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
     if (text) {
       const segments: (string | JSX.Element)[] = []
 
+      // Add author if present
+      const author = fileData.frontmatter?.author as string | undefined
+      if (author) {
+        segments.push(<span>{`By ${author}`}</span>)
+      }
+
       if (fileData.dates) {
         segments.push(<Date date={getDate(cfg, fileData)!} locale={cfg.locale} />)
       }
@@ -44,7 +50,9 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
 
       return (
         <p show-comma={options.showComma} class={classNames(displayClass, "content-meta")}>
-          {segments}
+          {segments.map((segment, idx) => (
+            <span key={idx} style={{ marginRight: idx < segments.length - 1 ? '0.5em' : 0 }}>{segment}</span>
+          ))}
         </p>
       )
     } else {
