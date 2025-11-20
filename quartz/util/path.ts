@@ -72,12 +72,6 @@ function sluggify(s: string): string {
 export function slugifyFilePath(fp: FilePath, excludeExt?: boolean): FullSlug {
   fp = stripSlashes(fp) as FilePath
 
-  // Special handling for attachments - preserve original path with spaces encoded
-  if (fp.startsWith("attachments/")) {
-    const attachmentPath = fp.replace(/^attachments\//, '')
-    return `attachments/${attachmentPath.replace(/ /g, '%20')}` as FullSlug
-  }
-
   let ext = getFileExtension(fp)
   const withoutFileExt = fp.replace(new RegExp(ext + "$"), "")
   if (excludeExt || [".md", ".html", undefined].includes(ext)) {
